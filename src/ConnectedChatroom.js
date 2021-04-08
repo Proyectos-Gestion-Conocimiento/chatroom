@@ -97,7 +97,7 @@ export default class ConnectedChatroom extends Component<
     }
   }
 
-  sendInitPayload = async (messageText: string) => {
+  sendPayload = async (messageText: string) => {
     if (messageText === "") return;
 
     const messageObj = {
@@ -300,7 +300,7 @@ export default class ConnectedChatroom extends Component<
   };
 
   handleButtonClick = (buttonTitle: string, payload: string) => {
-    this.sendMessage(payload);
+    this.sendPayload(payload);
     if (window.ga != null) {
       window.ga("send", "event", "chat", "chat-button-click");
     }
