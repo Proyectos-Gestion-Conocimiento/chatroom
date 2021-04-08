@@ -81,12 +81,8 @@ export default class ConnectedChatroom extends Component<
       this.setState({ messages: [welcomeMessage] });
     }
 
-    console.log(`welcomeMessage: ${this.props.welcomeMessage}`);
-    console.log(`initPayload: ${this.props.initPayload}`);
-
     if (this.props.initPayload) {
-      console.log(`initPayload: ${this.props.initPayload}`);
-      this.sendMessage(this.props.initPayload);
+      this.sendInitPayload(this.props.initPayload);
     }
   }
 
@@ -100,6 +96,61 @@ export default class ConnectedChatroom extends Component<
       this.messageQueueInterval = null;
     }
   }
+
+  sendInitPayload = async (messageText: string) => {
+    if (messageText === "") return;
+
+    const messageObj = {
+      message: { type: "text", text: messageText },
+      time: Date.now(),
+      username: this.props.userId,
+      uuid: uuidv4()
+    };
+
+    this.setState({
+      // Reveal all queued bot messages when the user sends a new message
+      messages: [
+        ...this.state.messages,
+        ...this.state.messageQueue
+      ],
+      messageQueue: []
+    })
+
+    this.setState({ waitingForBotResponse: true });
+    if (this.waitingForBotResponseTimer != null) {
+      window.clearTimeout(this.waitingForBotResponseTimer);
+    }
+
+    this.waitingForBotResponseTimer = setTimeout(() => {
+      this.setState({ waitingForBotResponse: false });
+    }, this.props.waitingTimeout);
+
+    const rasaMessageObj = {
+      message: messageObj.message.text,
+      sender: this.props.userId
+    };
+
+    const fetchOptions = Object.assign({}, {
+      method: "POST",
+      body: JSON.stringify(rasaMessageObj),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }, this.props.fetchOptions);
+
+    const response = await fetch(
+      `${this.state.currenthost}/webhooks/rest/webhook`,
+      fetchOptions
+    );
+
+    const messages = await response.json();
+
+    this.parseMessages(messages);
+
+    if (window.ga != null) {
+      window.ga("send", "event", "chat", "chat-message-sent");
+    }
+  };
 
   sendMessage = async (messageText: string) => {
     if (messageText === "") return;
