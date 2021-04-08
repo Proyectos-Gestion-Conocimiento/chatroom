@@ -84,14 +84,10 @@ export default class ConnectedChatroom extends Component<
     console.log(`welcomeMessage: ${this.props.welcomeMessage}`);
     console.log(`initPayload: ${this.props.initPayload}`);
 
-
-    // this.sendMessage("/greet");
-
-    // if (this.props.initPayload) {
-    //   console.log(`initPayload: ${this.props.initPayload}`);
-    //   this.sendMessage(this.props.initPayload);
-    // }
-
+    if (this.props.initPayload) {
+      console.log(`initPayload: ${this.props.initPayload}`);
+      this.sendMessage(this.props.initPayload);
+    }
   }
 
   componentWillUnmount() {
