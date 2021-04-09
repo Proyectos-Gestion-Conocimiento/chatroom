@@ -332,7 +332,7 @@ export default class ConnectedChatroom extends Component<
     return (
       <Chatroom
         messages={renderableMessages}
-        title={this.state.currenttitle}
+        title={this.state.title}
         waitingForBotResponse={waitingForBotResponse}
         isOpen={this.state.isOpen}
         speechRecognition={this.props.speechRecognition}
