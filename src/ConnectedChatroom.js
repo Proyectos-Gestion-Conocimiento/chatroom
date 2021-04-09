@@ -82,7 +82,7 @@ export default class ConnectedChatroom extends Component<
     }
 
     if (this.props.initPayload) {
-      this.sendInitPayload(this.props.initPayload);
+      this.sendPayload(this.props.initPayload);
     }
   }
 
@@ -332,7 +332,7 @@ export default class ConnectedChatroom extends Component<
     return (
       <Chatroom
         messages={renderableMessages}
-        title={this.state.title}
+        title={this.props.title}
         waitingForBotResponse={waitingForBotResponse}
         isOpen={this.state.isOpen}
         speechRecognition={this.props.speechRecognition}
