@@ -268,7 +268,13 @@ export default class ConnectedChatroom extends Component<
           })
         }
         console.log(`switching to ${message.custom.handoff_host}`);
-        this.sendMessage(`/${this.props.handoffIntent}{"from_host":"${this.props.host}"}`);
+        console.log(`language ${message.custom.language}`);
+        console.log(`institution ${message.custom.institution}`);
+        this.sendMessage(`/${this.props.handoffIntent}{"from_host":"${this.props.host}",` +
+        `"language":"${message.custom.language}","institution":"${message.custom.institution}",` +
+        `"user_url":"WEB"}`
+        
+        );
         return;
       }
 
