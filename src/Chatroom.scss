@@ -1,5 +1,5 @@
 $backgroundColor: white;
-$chromeColor: #cd0039;
+$chromeColor: #a8113c;
 $chromeColor2: #f4f7f9;
 $chromeColor3: grey;
 $bubbleColor: #f4f7f9;
@@ -87,8 +87,9 @@ $linkColor: #3498db;
   }
 
   .header img {
-    float: left;
-    width: 35px;
+      float: left;
+      width: 65px;
+      padding-left: 10px;
   }
 
   .header .hh3{
@@ -129,7 +130,7 @@ $linkColor: #3498db;
       }
 
       &.left {
-        background-image: url('..\/avatar.svg');
+        background-image: url('../avatar.svg');
         background-repeat: no-repeat;
         background-position: left top;
         background-size: 35px;

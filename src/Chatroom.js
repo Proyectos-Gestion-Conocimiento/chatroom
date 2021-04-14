@@ -204,10 +204,7 @@ export default class Chatroom extends Component<ChatroomProps, ChatroomState> {
       <div className={classnames("chatroom", isOpen ? "open" : "closed")}>
 
         <div className="header" onClick={this.props.onToggleChat}>
-        <div className="hh3">
-            <bold> TGN</bold>
-          </div>
-          <img src='avatar_white.svg'/>
+          <img src='./static/js/dist/tgn_amb_ona.svg'/>
           <div className="hh3" style={{paddingLeft: 0}} >
           bot
           </div>
