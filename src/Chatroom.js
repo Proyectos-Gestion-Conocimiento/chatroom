@@ -12,6 +12,11 @@ import { uuidv4 } from "./utils";
 import Message, { MessageTime } from "./Message";
 import SpeechInput from "./SpeechInput";
 
+const imagesPath = {
+  open: "./widget_open.svg",
+  close: "./widget_close.svg"
+}
+
 const REDRAW_INTERVAL = 10000;
 const GROUP_INTERVAL = 60000;
 
@@ -194,57 +199,82 @@ export default class Chatroom extends Component<ChatroomProps, ChatroomState> {
     }
   };
 
+  getImageName = () => this.state.open ? 'open' : 'close'
+  toggleImage = () => {
+    this.setState(state => ({ open: !state.open }))
+  }
+
   render() {
     const { messages, isOpen, waitingForBotResponse, voiceLang } = this.props;
     const messageGroups = this.groupMessages(messages);
     const isClickable = i =>
       !waitingForBotResponse && i == messageGroups.length - 1;
-
+    
+    const imageName = this.getImageName();
+    
     return (
-      <div className={classnames("chatroom", isOpen ? "open" : "closed")}>
+      <div>
+        <div className={classnames("chat-container", isOpen ? "open" : "closed")}>
+          <div className={classnames("chatroom", isOpen ? "open" : "closed")}>
 
-        <div className="header" onClick={this.props.onToggleChat}>
-          <img src='./static/js/dist/tgn_amb_ona.svg'/>
-          <div className="hh3" style={{paddingLeft: 0}} >
-          bot
-          </div>
-          <div className="hh3">
-            {this.props.title}
-          </div>
-        </div>
+            <div className="header">  {/*onClick={this.props.onToggleChat}*/}
+              <img src='./dist/tgn_amb_ona.svg'/>
+              <div className="hh3" style={{paddingLeft: 0}} >
+              bot
+              </div>
+              <div className="hh3">
+                {this.props.title}
+              </div>
+            </div>
 
-        <div className="chats" ref={this.chatsRef}>
-          {messageGroups.map((group, i) => (
-            <MessageGroup
-              messages={group}
-              key={i}
-              onButtonClick={
-                isClickable(i) ? this.handleButtonClick : undefined
-              }
-              voiceLang={voiceLang}
-            />
-          ))}
-          {waitingForBotResponse ? <WaitingBubble /> : null}
-        </div>
-        <form className="input" onSubmit={this.handleSubmitMessage}>
-          <input
-            type="text"
-            value={this.state.inputValue}
-            onChange={event =>
-              this.handleInputChange(event.currentTarget.value)
-            }
-            ref={this.inputRef}
-          />
-          
-          <input type="image" name="submit" src='submit.svg' height="30px"/>
-          {this.props.speechRecognition != null ? (
-            <SpeechInput
-              language={this.props.speechRecognition}
-              onSpeechInput={message => this.handleInputChange(message, true)}
-              onSpeechEnd={this.handleSubmitMessage}
-            />
-          ) : null}
-        </form>
+            <div className="chats" ref={this.chatsRef}>
+              {messageGroups.map((group, i) => (
+                <MessageGroup
+                  messages={group}
+                  key={i}
+                  onButtonClick={
+                    isClickable(i) ? this.handleButtonClick : undefined
+                  }
+                  voiceLang={voiceLang}
+                />
+              ))}
+              {waitingForBotResponse ? <WaitingBubble /> : null}
+            </div>
+            
+            <form className="input" onSubmit={this.handleSubmitMessage}>
+              <input
+                type="text"
+                value={this.state.inputValue}
+                onChange={event =>
+                  this.handleInputChange(event.currentTarget.value)
+                }
+                ref={this.inputRef}
+              />
+              
+              <input type="image" name="submit" src='submit.svg' height="30px"/>
+              {this.props.speechRecognition != null ? (
+                <SpeechInput
+                  language={this.props.speechRecognition}
+                  onSpeechInput={message => this.handleInputChange(message, true)}
+                  onSpeechEnd={this.handleSubmitMessage}
+                />
+              ) : null}
+            </form>
+          </div>
+
+          </div>
+
+          <div className='launcher-container'>
+            <button 
+              onClick={() => {
+                  this.props.onToggleChat();
+                  this.toggleImage();
+                  }
+                } 
+              className={classnames("launcher", isOpen ? "open" : "close")}>
+              <img src={imagesPath[imageName]} width="30px" />
+            </button>
+          </div>
       </div>
     );
   }
