@@ -13,8 +13,8 @@ import Message, { MessageTime } from "./Message";
 import SpeechInput from "./SpeechInput";
 
 const imagesPath = {
-  open: "./widget_open.svg",
-  close: "./widget_close.svg"
+  open: "./static/images/widget_open.svg",
+  close: "./static/images/widget_close.svg"
 }
 
 const REDRAW_INTERVAL = 10000;
@@ -218,7 +218,7 @@ export default class Chatroom extends Component<ChatroomProps, ChatroomState> {
           <div className={classnames("chatroom", isOpen ? "open" : "closed")}>
 
             <div className="header">  {/*onClick={this.props.onToggleChat}*/}
-              <img src='./tgn_amb_ona.svg'/>
+              <img src='./static/images/tgn_amb_ona.svg'/>
               <div className="hh3" style={{paddingLeft: 0}} >
               bot
               </div>
@@ -251,7 +251,7 @@ export default class Chatroom extends Component<ChatroomProps, ChatroomState> {
                 ref={this.inputRef}
               />
               
-              <input type="image" name="submit" src='submit.svg' height="30px"/>
+              <input type="image" name="submit" src='./static/images/submit.svg' height="30px"/>
               {this.props.speechRecognition != null ? (
                 <SpeechInput
                   language={this.props.speechRecognition}
