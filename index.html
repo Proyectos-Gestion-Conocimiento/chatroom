@@ -8,13 +8,13 @@
     <title>Chatroom Example</title>
   </head>
   <body>
-    <div class="chat-container"></div>
+    <div class="widget-container"></div>
     <script src="./dist/Chatroom.js"></script>
     <script type="text/javascript">
    
       window.chatroom = new window.Chatroom({
       title: " ",
-      container: document.querySelector(".chat-container"),
+      container: document.querySelector(".widget-container"),
       welcomeMessage: "",
       host: "http://localhost:5005",
       initPayload: '/start{"user_url":"WEB","institution":"tgn","language":"ca"}'

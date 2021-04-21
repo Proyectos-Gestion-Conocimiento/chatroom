@@ -10,16 +10,22 @@ $linkColor: #3498db;
 .chat-container {
 	margin: 100px auto;
 	width: 360px;
+  height: 520px;
 	position: fixed;
 	right: 0;
-	bottom: 0;
+	bottom: 60px;
 	margin: 0 20px 20px 0;
 	z-index: 100;
 	box-shadow: 0 2px 10px 1px hsla(0, 0%, 71%, .8);
-  border-radius: 3px;
-  
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+
+  &.closed {
+    visibility: hidden;
+  }
 }
-  
+
 @media (max-width: 800px) {
 	.chat-container {
 	  margin: 20px 10px;
@@ -27,9 +33,66 @@ $linkColor: #3498db;
 	}
 }
 
+@media (max-height: 800px) {
+	.chat-container {
+	  margin: 20px 10px;
+	  height: 460px;
+
+    &.closed {
+      visibility: hidden;
+    }
+	}
+}
+
+.launcher-container{
+  height: 60px;
+  width: 60px;
+  position: fixed;
+	right: 0;
+	bottom: 0;
+	margin: 0 20px 20px 0;
+	z-index: 100;
+}
+
+.launcher {
+  -webkit-animation-delay: 0;
+  -webkit-animation-duration: .5s;
+  -webkit-animation-name: slide-in;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-delay: 0;
+  -moz-animation-duration: .5s;
+  -moz-animation-name: slide-in;
+  -moz-animation-fill-mode: forwards;
+  animation-delay: 0;
+  animation-duration: .5s;
+  animation-name: slide-in;
+  animation-fill-mode: forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $chromeColor;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px 1px #b5b5b5;
+  height: 60px;
+  margin-top: 10px;
+  width: 60px;
+  transition: transform 0.25s;
+  
+  &.closed{
+    transform: rotate(0deg);
+    background-color: $chromeColor;
+    opacity: 1;
+  }
+  
+  &.opened{
+    transform: rotate(-90deg);
+  }
+}
+
 .chatroom {
   width: 100%;
-  height: 520px;
+  height: 100%;
   color: $textColor;
   max-height: 90vh;
   background-color: $backgroundColor;
@@ -47,7 +110,7 @@ $linkColor: #3498db;
   }
 
   &.closed {
-    height: 40px;
+    visibility: hidden;
   }
 
   // h3 {
@@ -72,7 +135,7 @@ $linkColor: #3498db;
     display: flex;
     align-items: left;
     justify-content: left;
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   .header h3{
@@ -130,7 +193,7 @@ $linkColor: #3498db;
       }
 
       &.left {
-        background-image: url('../avatar.svg');
+        background-image: url('../static/images/avatar.svg');
         background-repeat: no-repeat;
         background-position: left top;
         background-size: 35px;
@@ -355,3 +418,5 @@ $linkColor: #3498db;
     vertical-align: middle;
   }
 }
+
+button:focus {outline: none;}
